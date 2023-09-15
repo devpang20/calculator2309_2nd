@@ -13,4 +13,5 @@
 - [x] onEqual 기능 구현
 - [ ] onReset 기능 구현
 - [ ] onDelete 기능 구현
+- [ ] onEqual 리펙토링
 - [ ] 데이터 벨리데이션 2차 추가
