@@ -8,11 +8,20 @@ class Calculator {
     }
 
     onPressNumber(number) {
-       // TODO: 벨리데이션
+       // 소수점 입력시 현재 입력 받은 데이터가 없는 경우
+       if (number === "." && this.$currentPreview.textContent.length < 1) {
+         return 
+       }
+
        this.$currentPreview.textContent += number
     }
 
     onPressOperation(operation) {
+        // 연산기호 입력시 현재 입력 받은 데이터가 없는 경우
+        if (this.$currentPreview.textContent.length < 1) {
+            return 
+        }
+
         this.$previousPreview.textContent = `${this.$currentPreview.textContent} ${operation}`
         this.$currentPreview.textContent = ''
     }
