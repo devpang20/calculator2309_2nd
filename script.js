@@ -1,6 +1,8 @@
 class Calculator {
     $previousPreview
     $currentPreview
+    previousOperation = ""
+    currentOpenration = ""
 
     constructor($previousPreview, $currentPreview) {
         this.$previousPreview = $previousPreview
@@ -21,9 +23,45 @@ class Calculator {
         if (this.$currentPreview.textContent.length < 1) {
             return 
         }
-
+        this.previousOperation = operation
         this.$previousPreview.textContent = `${this.$currentPreview.textContent} ${operation}`
         this.$currentPreview.textContent = ''
+    }
+
+    onEqual() {
+        if (
+            this.$currentPreview.textContent.length < 1 ||
+            this.$previousPreview.textContent.length < 1 ||
+            this.previousOperation.length < 1
+        ) {
+            return
+        }
+
+        let result = 0
+
+        switch (this.previousOperation) {
+            case "+":
+                result = Number(this.$previousPreview.textContent.split(" ")[0])
+                + Number(this.$currentPreview.textContent)
+                break
+            case "-":
+                result = Number(this.$previousPreview.textContent.split(" ")[0])
+                - Number(this.$currentPreview.textContent)
+                break
+            case "*":
+                result = Number(this.$previousPreview.textContent.split(" ")[0])
+                * Number(this.$currentPreview.textContent)
+                break
+            case "÷":
+                result = Number(this.$previousPreview.textContent.split(" ")[0])
+                / Number(this.$currentPreview.textContent)
+                break
+            default:
+                break
+        }
+        this.$currentPreview.textContent = result.toString()
+        this.$previousPreview.textContent = ""
+        this.currentOperation = ""
     }
 }
 
@@ -36,7 +74,7 @@ const $plus = document.querySelector('[data-btn-plus]')
 const $minus = document.querySelector('[data-btn-minus]')
 const $multiply = document.querySelector('[data-btn-multiply]')
 const $divide = document.querySelector('[data-btn-divide]')
-const $eqaul = document.querySelectorAll('[data-btn-eqaul]')
+const $eqaul = document.querySelector('[data-btn-eqaul]')
 
 // 숫자, 연산
 const $numbers = document.querySelectorAll('[data-btn-number]')
@@ -66,7 +104,7 @@ $operations.forEach(($operation) => {
                 cal.onPressOperation("÷")
                 break;
             case $eqaul:
-                //
+                cal.onEqual()
                 break;
             default:
                 break;
